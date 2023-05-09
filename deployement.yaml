@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: phpmyadmin-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: phpmyadmin
+  template:
+    metadata:
+      labels:
+        app: phpmyadmin
+    spec:
+      containers:
+      - name: phpmyadmin
+        image: 473174870981.dkr.ecr.us-west-2.amazonaws.com/my-repo:1.9
+        ports:
+        - containerPort: 80
+        env:
+        - name: PMA_ARBITRARY
+          value: "1"
+        - name: PMA_HOST
+          value: "${PMA_HOST_VALUE}"
+        - name: MYSQL_ROOT_PASSWORD
+          value: mypassword
+        - name: MYSQL_DATABASE
+          value: mydb
+        - name: MYSQL_USER
+          value: myuser
+        - name: MYSQL_PASSWORD
+          value: mypassword
